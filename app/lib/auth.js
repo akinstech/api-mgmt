@@ -8,8 +8,7 @@ const hash = async (password, rounds) => {
 }
 
 // Basic authentication scheme
-const validate = async (request, username, password) => {
-    log.info(`Validating user ${username}`);
+const validate = async (request) => {
     try {
         // Retrieve user
         const user = await AppDB.getUserByName(username);

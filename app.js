@@ -3,7 +3,8 @@ const os = require('os');
 const path = require('path');
 
 const Hapi = require('@hapi/hapi');
-const HapiBasicAuth = require('@hapi/basic');
+// const HapiBasicAuth = require('@hapi/basic');
+const Jwt = require('@hapi/jwt');
 
 const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
@@ -74,8 +75,30 @@ const init = async () => {
     ]);
 
     // Register basic authentication strategy  
-    await server.register(HapiBasicAuth);
-    server.auth.strategy('simple', 'basic', { validate: Auth.validate });
+    // await server.register(HapiBasicAuth);
+    // server.auth.strategy('simple', 'basic', { validate: Auth.validate });
+    await server.register(Jwt);
+    server.auth.strategy('jwt', 'jwt', {
+        keys: global.App.env.JWT_TOKEN_SECRET,
+        verify: {
+            aud: 'urn:audience:databus',
+            iss: 'urn:issuer:databusauth',
+            sub: false,
+            nbf: true,
+            exp: true,
+            // maxAgeSec: 30, // 4 hours
+            timeSkewSec: 15
+        },
+        validate: (artifacts, request, h) => {
+            console.log(`In validate`)
+            console.log(artifacts);
+            return {
+                isValid: true,
+                credentials: { user: artifacts.decoded.payload.user }
+            };
+        }
+    });
+    // server.auth.default('jwt');
 
     server.route(rootRouter.routes);
     server.route(userRouter.routes);

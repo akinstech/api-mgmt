@@ -9,7 +9,7 @@ const routes = [
         method: 'POST',
         path: '/user/create',
         config: {
-            auth: 'simple',
+            auth: 'jwt',
             description: 'Create a new user',
             notes: 'Creates a new user based on supplied user object.',
             tags: ['api'],
@@ -28,7 +28,7 @@ const routes = [
         method: 'POST',
         path: '/user/delete',
         config: {
-            auth: 'simple',
+            auth: 'jwt',
             description: 'Delete a user',
             notes: 'Deletes a user based on supplied username.',
             tags: ['api'],

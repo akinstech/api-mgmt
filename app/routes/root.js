@@ -23,7 +23,7 @@ const routes = [
         method: 'GET',
         path: '/testauth',
         config: {
-            auth: 'simple',
+            auth: 'jwt',
             description: 'Diagnostic Test (Authenticated)',
             notes: 'Performs a basic diagnostic test to confirm operation of the API.  Requires authentication.  Useful for testing and monitoring.',
             tags: ['api'],
@@ -36,7 +36,7 @@ const routes = [
         method: 'GET',
         path: '/systeminfo',
         config: {
-            auth: 'simple',
+            auth: 'jwt',
             description: 'System Information (Authenticated)',
             notes: 'Performs a basic diagnostic test and returns configuration information.',
             tags: ['api'],
