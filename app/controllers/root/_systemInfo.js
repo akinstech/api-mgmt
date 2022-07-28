@@ -1,42 +1,7 @@
 const os = require('os');
-
 const log = global.App.require('lib/log');
 
-const test = async (request, h) => {
-    try {
-        const result = {
-            instance: global.App.name,
-            version: global.App.packageJson.version,
-            server: os.hostname(),
-            port: global.App.port,
-            status: 'up',
-        };
-        return result;
-    } catch (err) {
-        log.error(err);
-        throw err;
-    }
-};
-
-const testAuth = async (request, h) => {
-    try {
-        const result = {
-            instance: global.App.name,
-            version: global.App.packageJson.version,
-            server: os.hostname(),
-            port: global.App.port,
-            status: 'up',
-            user: request.auth.credentials.name,
-        };
-
-        return result;
-    } catch (err) {
-        log.error(err);
-        throw err;
-    }
-};
-
-const systemInfo = async (request, h) => {
+async function systemInfo(request, h) {
     try {
         const result = {
             instance: global.App.name,
@@ -64,8 +29,4 @@ const systemInfo = async (request, h) => {
     }
 };
 
-module.exports = {
-    test,
-    testAuth,
-    systemInfo,
-};
+module.exports = systemInfo;
